@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>김천중앙고등학교 건의함</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* 사이드바 스타일 */
+        .sidebar {
+            width: 300px;
+            background-color: #e8f0fe;
+            border-right: 2px solid #d1e3ff;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background-color: #6c9eff;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .school-name {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* 로그인 섹션 */
+        .login-section {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #d1e3ff;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #6c9eff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .login-btn:hover {
+            background-color: #5a8ae8;
+        }
+
+        /* 사용자 정보 섹션 */
+        .user-info {
+            background-color: #ffffff;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .user-info.active {
+            display: block;
+        }
+
+        .user-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .user-class {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 건의 목록 섹션 */
+        .suggestion-lists {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .list-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e8f0fe;
+        }
+
+        .suggestion-item {
+            padding: 10px;
+            margin-bottom: 8px;
+            background-color: #f8faff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .suggestion-item:hover {
+            background-color: #e8f0fe;
+        }
+
+        .suggestion-title {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .suggestion-date {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* 메인 콘텐츠 영역 */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            background-color: #ffffff;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 16px;
+        }
+
+        /* 건의 작성 영역 */
+        .suggestion-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .input-section {
+            background-color: #f8faff;
+            border: 2px solid #e8f0fe;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .category-select {
+            width: 200px;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #d1e3ff;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .title-input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #d1e3ff;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .content-textarea {
+            width: 100%;
+            min-height: 200px;
+            padding: 15px;
+            border: 1px solid #d1e3ff;
+            border-radius: 8px;
+            font-size: 14px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .submit-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .anonymous-check {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .submit-btn {
+            padding: 12px 30px;
+            background-color: #6c9eff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #5a8ae8;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 300px;
+            }
+            
+            .main-content {
+                padding: 15px;
+            }
+        }
+
+        /* 로딩 및 에러 메시지 스타일 */
+        .message {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .loading {
+            text-align: center;
+            color: #6c9eff;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 사이드바 -->
+        <div class="sidebar">
+            <!-- 로고 섹션 -->
+            <div class="logo-section">
+                <div class="logo">김중</div>
+                <div class="school-name">김천중앙고등학교</div>
+            </div>
+
+            <!-- 로그인 섹션 -->
+            <div class="login-section" id="loginSection">
+                <div class="login-form">
+                    <input type="text" id="studentId" placeholder="학번" />
+                    <input type="password" id="password" placeholder="비밀번호" />
+                    <button class="login-btn" onclick="handleLogin()">로그인</button>
+                </div>
+            </div>
+
+            <!-- 사용자 정보 섹션 -->
+            <div class="user-info" id="userInfo">
+                <div class="user-name" id="userName">사용자명</div>
+                <div class="user-class" id="userClass">학년 반</div>
+                <button class="login-btn" onclick="handleLogout()" style="margin-top: 10px;">로그아웃</button>
+            </div>
+
+            <!-- 건의 목록 섹션 -->
+            <div class="suggestion-lists">
+                <div class="list-title">진행중인 건의</div>
+                <div id="pendingSuggestions">
+                    <div class="loading">로딩 중...</div>
+                </div>
+
+                <div class="list-title" style="margin-top: 20px;">답변 완료</div>
+                <div id="completedSuggestions">
+                    <div class="loading">로딩 중...</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 메인 콘텐츠 -->
+        <div class="main-content">
+            <div class="header">
+                <h1>학교 건의함</h1>
+                <p>학교 생활 개선을 위한 여러분의 소중한 의견을 들려주세요</p>
+            </div>
+
+            <div class="suggestion-area">
+                <div class="input-section">
+                    <select class="category-select" id="categorySelect">
+                        <option value="">카테고리 선택</option>
+                        <option value="facility">시설 관련</option>
+                        <option value="meal">급식 관련</option>
+                        <option value="uniform">교복/복장 관련</option>
+                        <option value="study">학습 환경</option>
+                        <option value="event">행사/동아리</option>
+                        <option value="other">기타</option>
+                    </select>
+                    
+                    <input type="text" class="title-input" id="titleInput" placeholder="건의 제목을 입력하세요..." />
+                    
+                    <textarea class="content-textarea" id="contentTextarea" placeholder="건의 내용을 자세히 적어주세요...&#10;&#10;• 현재 상황과 문제점&#10;• 개선 방안 제안&#10;• 기대 효과 등을 포함해 주시면 더욱 좋습니다."></textarea>
+                    
+                    <div class="submit-section">
+                        <div class="anonymous-check">
+                            <input type="checkbox" id="anonymous" />
+                            <label for="anonymous">익명으로 제출</label>
+                        </div>
+                        <button class="submit-btn" onclick="submitSuggestion()">건의하기</button>
+                    </div>
+                </div>
+
+                <!-- 메시지 표시 영역 -->
+                <div id="messageArea"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 백엔드 API 서버 주소
+        const API_BASE_URL = 'http://localhost:5000/api';
+        
+        // 사용자 토큰 저장 변수
+        let userToken = null;
+        let currentUser = null;
+
+        // 페이지 로드 시 초기 설정
+        document.addEventListener('DOMContentLoaded', function() {
+            // 저장된 토큰 확인
+            userToken = localStorage.getItem('token');
+            currentUser = JSON.parse(localStorage.getItem('user'));
+            
+            if (userToken && currentUser) {
+                showUserInfo(currentUser);
+            }
+            
+            // 건의글 목록 로드
+            loadSuggestions();
+        });
+
+        // 로그인 처리 함수
+        async function handleLogin() {
+            const studentId = document.getElementById('studentId').value;
+            const password = document.getElementById('password').value;
+            
+            if (!studentId || !password) {
+                showMessage('학번과 비밀번호를 입력해주세요.', 'error');
+                return;
+            }
+            
+            try {
+                showMessage('로그인 중...', 'loading');
+                
+                const response = await fetch(`${API_BASE_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        studentId: studentId,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    // 로그인 성공
+                    userToken = data.token;
+                    currentUser = data.user;
+                    
+                    // 로컬 스토리지에 저장
+                    localStorage.setItem('token', userToken);
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    
+                    showUserInfo(currentUser);
+                    showMessage('로그인 성공!', 'success');
+                    
+                    // 건의글 목록 새로고침
+                    loadSuggestions();
+                } else {
+                    showMessage(data.message || '로그인 실패', 'error');
+                }
+            } catch (error) {
+                console.error('로그인 에러:', error);
+                showMessage('서버 연결 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 로그아웃 처리 함수
+        function handleLogout() {
+            userToken = null;
+            currentUser = null;
+            
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            
+            document.getElementById('loginSection').style.display = 'block';
+            document.getElementById('userInfo').classList.remove('active');
+            document.getElementById('studentId').value = '';
+            document.getElementById('password').value = '';
+            
+            showMessage('로그아웃되었습니다.', 'success');
+            
+            // 건의글 목록 새로고침
+            loadSuggestions();
+        }
+
+        // 사용자 정보 표시 함수
+        function showUserInfo(user) {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('userInfo').classList.add('active');
+            document.getElementById('userName').textContent = user.name;
+            document.getElementById('userClass').textContent = `${user.grade}학년 ${user.classNumber}반`;
+        }
+
+        // 건의글 제출 함수
+        async function submitSuggestion() {
+            const title = document.getElementById('titleInput').value;
+            const content = document.getElementById('contentTextarea').value;
+            const category = document.getElementById('categorySelect').value;
+            const isAnonymous = document.getElementById('anonymous').checked;
+            
+            if (!category) {
+                showMessage('카테고리를 선택해주세요.', 'error');
+                return;
+            }
+            
+            if (!title.trim()) {
+                showMessage('제목을 입력해주세요.', 'error');
+                return;
+            }
+            
+            if (!content.trim()) {
+                showMessage('내용을 입력해주세요.', 'error');
+                return;
+            }
+            
+            if (content.trim().length < 10) {
+                showMessage('내용을 10자 이상 입력해주세요.', 'error');
+                return;
+            }
+            
+            try {
+                showMessage('건의를 제출하는 중...', 'loading');
+                
+                const headers = {
+                    'Content-Type': 'application/json',
+                };
+                
+                // 로그인한 사용자만 토큰 추가
+                if (userToken) {
+                    headers['Authorization'] = `Bearer ${userToken}`;
+                }
+                
+                const response = await fetch(`${API_BASE_URL}/suggestions`, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify({
+                        title: title,
+                        content: content,
+                        category: category,
+                        isAnonymous: isAnonymous
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showMessage('건의가 성공적으로 제출되었습니다!', 'success');
+                    
+                    // 폼 초기화
+                    document.getElementById('titleInput').value = '';
+                    document.getElementById('contentTextarea').value = '';
+                    document.getElementById('categorySelect').value = '';
+                    document.getElementById('anonymous').checked = false;
+                    
+                    // 건의글 목록 새로고침
+                    loadSuggestions();
+                } else {
+                    showMessage(data.message || '건의 제출 실패', 'error');
+                }
+            } catch (error) {
+                console.error('건의 제출 에러:', error);
+                showMessage('서버 연결 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 건의글 목록 로드 함수
+        async function loadSuggestions() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/suggestions`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displaySuggestions(data.suggestions);
+                } else {
+                    console.error('건의글 로드 실패:', data.message);
+                }
+            } catch (error) {
+                console.error('건의글 로드 에러:', error);
+                document.getElementById('pendingSuggestions').innerHTML = '<div class="error-message">로드 실패</div>';
+                document.getElementById('completedSuggestions').innerHTML = '<div class="error-message">로드 실패</div>';
+            }
+        }
+
+        // 건의글 목록 표시 함수
+        function displaySuggestions(suggestions) {
+            const pendingDiv = document.getElementById('pendingSuggestions');
+            const completedDiv = document.getElementById('completedSuggestions');
+            
+            const pendingSuggestions = suggestions.filter(s => s.status === 'pending' || s.status === 'reviewing');
+            const completedSuggestions = suggestions.filter(s => s.status === 'completed');
+            
+            // 진행중인 건의
+            if (pendingSuggestions.length === 0) {
+                pendingDiv.innerHTML = '<div style="color: #666; font-style: italic;">진행중인 건의가 없습니다.</div>';
+            } else {
+                pendingDiv.innerHTML = pendingSuggestions.map(suggestion => `
+                    <div class="suggestion-item" onclick="viewSuggestion('${suggestion._id}')">
+                        <div class="suggestion-title">${suggestion.title}</div>
+                        <div class="suggestion-date">
+                            ${new Date(suggestion.createdAt).toLocaleDateString('ko-KR')} 
+                            <span class="status-badge status-pending">${getStatusText(suggestion.status)}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            
+            // 답변 완료된 건의
+            if (completedSuggestions.length === 0) {
+                completedDiv.innerHTML = '<div style="color: #666; font-style: italic;">완료된 건의가 없습니다.</div>';
+            } else {
+                completedDiv.innerHTML = completedSuggestions.map(suggestion => `
+                    <div class="suggestion-item" onclick="viewSuggestion('${suggestion._id}')">
+                        <div class="suggestion-title">${suggestion.title}</div>
+                        <div class="suggestion-date">
+                            ${new Date(suggestion.createdAt).toLocaleDateString('ko-KR')} 
+                            <span class="status-badge status-completed">${getStatusText(suggestion.status)}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // 상태 텍스트 변환 함수
+        function getStatusText(status) {
+            const statusMap = {
+                'pending': '접수됨',
+                'reviewing': '검토중',
+                'completed': '완료',
+                'rejected': '반려'
+            };
+            return statusMap[status] || status;
+        }
+
+        // 건의글 상세 보기 함수
+        async function viewSuggestion(suggestionId) {
+            try {
+                const response = await fetch(`${API_BASE_URL}/suggestions/${suggestionId}`);
+                const data = await response.json();
+                
+                if (response.ok) {
+                    alert(`제목: ${data.title}\n내용: ${data.content}\n상태: ${getStatusText(data.status)}`);
+                } else {
+                    showMessage('건의글을 불러올 수 없습니다.', 'error');
+                }
+            } catch (error) {
+                console.error('건의글 상세 보기 에러:', error);
+                showMessage('서버 연결 오류가 발생했습니다.', 'error');
+            }
+        }
+
+        // 메시지 표시 함수
+        function showMessage(message, type) {
+            const messageArea = document.getElementById('messageArea');
+            const messageClass = type === 'success' ? 'success-message' : 
+                                type === 'error' ? 'error-message' : 'loading';
+            
+            messageArea.innerHTML = `<div class="message ${messageClass}">${message}</div>`;
+            
+            // 3초 후 메시지 자동 제거 (로딩 메시지 제외)
+            if (type !== 'loading') {
+                setTimeout(() => {
+                    messageArea.innerHTML = '';
+                }, 3000);
+            }
+        }
+    </script>
+</body>
+</html>
